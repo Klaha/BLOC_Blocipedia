@@ -83,4 +83,7 @@ Rails.application.configure do
 
   # http://bloccit.herokuapp.com
   config.action_mailer.default_url_options = { host: 'jm-blocipedia.herokuapp.com' }
+
+  # Foundation
+  config.assets.precompile += %w( vendor/modernizr.js )
 end

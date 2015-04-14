@@ -8,26 +8,66 @@
 
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
-    <%= javascript_include_tag "application" 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
 
   <body>
-  <div class="container">
-    asasas
-  </div>  
-    <div class="right">
-     <% if current_user %>
-      Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-     <% else %>
-      <%= link_to "Sign In", new_user_session_path %> or
-      <%= link_to "Sign Up", new_user_registration_path %>
-     <% end %>
-   </div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+      <div class="row">
+        <div class="small-12 small-centered columns">
 
-    <%= yield %>
+          <!-- NAV -->
+            <nav class="top-bar" data-topbar role="navigation">
+              <ul class="title-area">
+                <li class="name">
+                  <h1><%= link_to "Blocipedia", root_path %></h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>&nbsp;</span></a></li>
+              </ul>
 
-  </body>
+              <section class="top-bar-section">
+                <ul class="right">
+                <% if current_user %>
+                  <li class="text-center"><a href="#"><%= current_user.email %></a></li>
+                  <li class="text-center"><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+                <% else %>  
+                  <li class="active text-center"><%= link_to "Log In", new_user_session_path %></li>
+                <% end %>
+                </ul>
+              </section>
+            </nav>
+          <!-- NAV -->
+          
+          <!-- FLASH -->
+            <% if flash[:notice] %>
+              <div data-alert class="alert-box success text-center">
+                <%= flash[:notice] %>
+                <a href="#" class="close">&times;</a>
+              </div>
+            <% elsif flash[:alert] %>
+              <div data-alert class="alert-box warning">
+                <%= flash[:alert] %>
+                <a href="#" class="close">&times;</a>
+              </div>
+            <% elsif flash[:error] %>
+              <div data-alert class="alert-box error">
+                <%= flash[:error] %>
+                <a href="#" class="close">&times;</a>
+              </div>
+            <% end %>
+          <!-- FLASH -->
+          
+          <!-- CONTENT -->
+            <%= yield %>
+          <!-- CONTENT -->
+
+        </div>
+      </div>
+      
+
+      
+
+      
+
+    </body>
 </html>

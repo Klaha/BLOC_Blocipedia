@@ -20,7 +20,7 @@ group :development do
 end
 
 # Zurb's Foundation
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 5.5.1.0'
 
 # User Authentication
 gem 'devise'
