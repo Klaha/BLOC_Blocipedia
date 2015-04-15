@@ -33,11 +33,11 @@
                 <ul class="right">
                 <% if current_user %>
                   <li class="text-center"><%= link_to "Wikis", wikis_path %></li>
-                  <li class="text-center"><a href="#"><%= current_user.email %></a></li>
+                  <li class="text-center"><%= link_to "Profile", edit_user_registration_path %></li>
                   <li class="text-center"><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
                 <% else %>
                   <li class="text-center"><%= link_to "Wikis", wikis_path %></li>  
-                  <li class="active text-center"><%= link_to "Log In", new_user_session_path %></li>
+                  <li class="text-center"><%= link_to "Log In", new_user_session_path %></li>
                 <% end %>
                 </ul>
               </section>
