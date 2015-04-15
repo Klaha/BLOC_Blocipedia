@@ -20,7 +20,11 @@
             <nav class="top-bar" data-topbar role="navigation">
               <ul class="title-area">
                 <li class="name">
-                  <h1><%= link_to "Blocipedia", root_path %></h1>
+                  <% if !current_user %>
+                    <h1><%= link_to "Blocipedia", root_path %></h1>
+                  <% else %>
+                    <h1><%= link_to "Blocipedia", wikis_path %></h1>
+                  <% end %>
                 </li>
                 <li class="toggle-topbar menu-icon"><a href="#"><span>&nbsp;</span></a></li>
               </ul>

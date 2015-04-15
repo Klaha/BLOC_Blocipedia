@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="small-12 columns small-centered text-center">
+    <h2>My Wikis</h2>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="small-7 columns small-centered">
+    <table>
+      <thead>
+        <tr>
+          <th class="text-center">Title</th>
+          <th class="text-center">Edit</th>
+          <th class="text-center">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @wikis.each do |wiki| %>
+          <tr>
+            <td><strong><%= link_to wiki.title, wiki_path(wiki) %></strong></td>
+            <td><%= link_to "Edit", edit_wiki_path(wiki) %></td>
+            <td><%= link_to "Delete", wiki_path(wiki), method: :delete %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns small-centered text-center">
+<%= link_to "New Wiki", new_wiki_path, class: 'button small info' %>
+  </div>
+</div>
