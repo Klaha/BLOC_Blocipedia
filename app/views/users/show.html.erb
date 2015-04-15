@@ -1,6 +1,6 @@
 <div class="row">
   <div class="small-12 columns small-centered text-center">
-    <h2>Wikis:</h2>
+    <h2>My Wikis:</h2>
   </div>
 </div>
 <br>
@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @wikis.each do |wiki| %>
+        <% @userwikis.each do |wiki| %>
           <tr>
             <td><strong><%= link_to wiki.title, wiki_path(wiki) %></strong></td>
             <td><%= link_to "Edit", edit_wiki_path(wiki) %></td>
@@ -26,10 +26,8 @@
     </table>
   </div>
 </div>
-<% if policy(@wikis).create? %>
-  <div class="row">
-    <div class="small-12 columns small-centered text-center">
-      <%= link_to "New Wiki", new_wiki_path, class: 'button small info' %>
-    </div>
+<div class="row">
+  <div class="small-12 columns small-centered text-center">
+<%= link_to "New Wiki", new_wiki_path, class: 'button small info' %>
   </div>
-<% end %>
+</div>

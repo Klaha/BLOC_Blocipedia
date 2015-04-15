@@ -32,9 +32,11 @@
               <section class="top-bar-section">
                 <ul class="right">
                 <% if current_user %>
+                  <li class="text-center"><%= link_to "Wikis", wikis_path %></li>
                   <li class="text-center"><a href="#"><%= current_user.email %></a></li>
                   <li class="text-center"><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
-                <% else %>  
+                <% else %>
+                  <li class="text-center"><%= link_to "Wikis", wikis_path %></li>  
                   <li class="active text-center"><%= link_to "Log In", new_user_session_path %></li>
                 <% end %>
                 </ul>
@@ -49,12 +51,12 @@
                 <a href="#" class="close">&times;</a>
               </div>
             <% elsif flash[:alert] %>
-              <div data-alert class="alert-box warning">
+              <div data-alert class="alert-box warning text-center">
                 <%= flash[:alert] %>
                 <a href="#" class="close">&times;</a>
               </div>
             <% elsif flash[:error] %>
-              <div data-alert class="alert-box error">
+              <div data-alert class="alert-box alert text-center">
                 <%= flash[:error] %>
                 <a href="#" class="close">&times;</a>
               </div>

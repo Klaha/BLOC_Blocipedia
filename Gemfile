@@ -27,3 +27,6 @@ gem 'devise'
 
 # Sensitive Data
 gem 'figaro', '1.0'
+
+# Authorizations
+gem 'pundit'
