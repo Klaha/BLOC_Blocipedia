@@ -13,9 +13,6 @@
   </head>
 
   <body>
-      <div class="row">
-        <div class="small-12 small-centered columns">
-
           <!-- NAV -->
             <nav class="top-bar" data-topbar role="navigation">
               <ul class="title-area">
@@ -64,16 +61,12 @@
           <!-- FLASH -->
           
           <!-- CONTENT -->
-            <%= yield %>
+            <div class="row">
+              <div class="small-12 columns">
+                <%= yield %>
+              </div>
+            </div>
           <!-- CONTENT -->
-
-        </div>
-      </div>
-      
-
-      
-
-      
 
     </body>
 </html>
