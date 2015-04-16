@@ -17,4 +17,12 @@ class User < ActiveRecord::Base
   def premium?
     role == 'premium'
   end
+
+  def upgrade_account
+    update_attributes(role: 'premium')
+  end
+
+  def downgrade_account
+    update_attributes(role: 'standard')
+  end
 end

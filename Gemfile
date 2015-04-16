@@ -33,3 +33,6 @@ gem 'pundit'
 
 # Seed Data
 gem 'faker'
+
+# Stripe
+gem 'stripe'

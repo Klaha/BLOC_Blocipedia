@@ -72,6 +72,19 @@
 
 <div class="row">
   <div class="small-12 text-center">
+
+    <% if current_user.standard? || current_user.admin? %>
+      <h3>Upgrade my account:</h3>
+      <%= link_to "Upgrade!", new_charge_path, class: 'button small success' %>
+    <% elsif current_user.premium? %>
+      <h2>Premium!</h2>
+    <% end %>
+    
+    <% if current_user.premium? %>
+      <h3>Downgrade</h3>
+      <%= button_to "Downgrade my account", downgrade_path, class: 'button small alert', data: { confirm: "Are you sure?" }, method: :delete %>
+    <% end %>
+
     <h3>Cancel my account :(</h3>
 
     <%= button_to "Cancel my account", registration_path(resource_name), class: 'button small alert', data: { confirm: "Are you sure?" }, method: :delete %>

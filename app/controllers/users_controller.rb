@@ -13,6 +13,13 @@ class UsersController < ApplicationController
    end
   end
 
+  def downgrade
+    @user = current_user
+    current_user.downgrade_account
+    flash[:notice] = "Account Downgraded"
+    redirect_to edit_user_registration_path
+  end
+
   private
 
   def user_params
