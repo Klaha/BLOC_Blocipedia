@@ -81,6 +81,7 @@
     <% end %>
     
     <% if current_user.premium? %>
+      <p><%= pluralize(current_user.premium_left, 'day') %> of premium remaining!</p>
       <h3>Downgrade</h3>
       <%= button_to "Downgrade my account", downgrade_path, class: 'button small alert', data: { confirm: "Are you sure?" }, method: :delete %>
     <% end %>

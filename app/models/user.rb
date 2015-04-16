@@ -19,10 +19,14 @@ class User < ActiveRecord::Base
   end
 
   def upgrade_account
-    update_attributes(role: 'premium')
+    update_attributes(role: 'premium', premium: Time.now)
   end
 
   def downgrade_account
-    update_attributes(role: 'standard')
+    update_attributes(role: 'standard', premium: nil)
+  end
+
+  def premium_left
+    30 - (DateTime.now.to_date - premium.to_date).to_i
   end
 end
