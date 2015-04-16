@@ -30,3 +30,6 @@ gem 'figaro', '1.0'
 
 # Authorizations
 gem 'pundit'
+
+# Seed Data
+gem 'faker'
