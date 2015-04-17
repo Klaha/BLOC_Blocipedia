@@ -39,3 +39,6 @@ gem 'stripe'
 
 # Automatize Account Downgrades
 gem 'whenever', :require => false
+
+# MarkDown
+gem 'redcarpet'
