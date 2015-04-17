@@ -5,7 +5,7 @@
 </div>
 <br>
 <div class="row">
-  <div class="small-7 columns small-centered">
+  <div class="small-12 columns small-centered">
     <table>
       <thead>
         <tr>
@@ -15,11 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        <% @wikis.each do |wiki| %>
+        <% @publicwikis.each do |publicwiki| %>
           <tr>
-            <td><strong><%= link_to wiki.title, wiki_path(wiki) %></strong></td>
-            <td><%= link_to "Edit", edit_wiki_path(wiki) %></td>
-            <td><%= link_to "Delete", wiki_path(wiki), method: :delete %></td>
+            <td><strong><%= link_to publicwiki.title, wiki_path(publicwiki) %></strong></td>
+            <td><%= link_to "Edit", edit_wiki_path(publicwiki) %></td>
+            <td><%= link_to "Delete", wiki_path(publicwiki), method: :delete %></td>
           </tr>
         <% end %>
       </tbody>
@@ -30,6 +30,36 @@
   <div class="row">
     <div class="small-12 columns small-centered text-center">
       <%= link_to "New Wiki", new_wiki_path, class: 'button small info' %>
+    </div>
+  </div>
+<% end %>
+<% if current_user && (current_user.role == 'admin' || current_user.role == 'premium') %>
+  <div class="row">
+    <div class="small-12 columns small-centered text-center">
+      <h2>Private Wikis:</h2>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="small-8 columns small-centered">
+      <table>
+        <thead>
+          <tr>
+            <th class="text-center">Title</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @privatewikis.each do |privatewiki| %>
+            <tr>
+              <td><strong><%= link_to privatewiki.title, wiki_path(privatewiki) %></strong></td>
+              <td><%= link_to "Edit", edit_wiki_path(privatewiki) %></td>
+              <td><%= link_to "Delete", wiki_path(privatewiki), method: :delete %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 <% end %>

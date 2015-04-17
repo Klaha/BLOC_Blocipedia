@@ -23,12 +23,14 @@
         <%= f.text_area :body %>
       </div>
     </div>
-    <div class="row">
-      <div class="field small-12 columns">
-        <%= f.check_box :private %>
-        <%= f.label :private, "Private?" %>
+    <% if current_user.role == 'admin' || current_user.role == 'premium' %>
+      <div class="row">
+        <div class="field small-12 columns">
+          <%= f.check_box :private %>
+          <%= f.label :private, "Private?" %>
+        </div>
       </div>
-    </div>
+    <% end %>
     <div class="row">
       <div class="actions small-10 small-centered columns text-center">
           <%= f.submit "Save", class: 'button small' %>

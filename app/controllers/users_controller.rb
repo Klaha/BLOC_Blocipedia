@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  
   def show
     @userwikis = current_user.wikis
+    @userprivatewikis = @userwikis.where('private == ?', true)
   end
 
   def update
@@ -15,7 +18,14 @@ class UsersController < ApplicationController
 
   def downgrade
     @user = current_user
+    @userwikis = current_user.wikis
+    @userprivatewikis = @userwikis.where('private == ?', true)
     current_user.downgrade_account
+
+    @userprivatewikis.each do |privatewiki|
+      privatewiki.downgrade_wikis
+    end
+
     flash[:notice] = "Account Downgraded"
     redirect_to edit_user_registration_path
   end

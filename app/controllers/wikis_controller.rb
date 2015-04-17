@@ -1,6 +1,8 @@
 class WikisController < ApplicationController
   def index
     @wikis = Wiki.all
+    @publicwikis = Wiki.where(:private => [nil, false])
+    @privatewikis = Wiki.where('private == ?', true)
     authorize @wikis
   end
 
