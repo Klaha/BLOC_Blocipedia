@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   
   def show
     @userwikis = current_user.wikis
-    @userprivatewikis = @userwikis.where('private == ?', true)
+    @userprivatewikis = @userwikis.where('private = ?', true)
   end
 
   def update
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   def downgrade
     @user = current_user
     @userwikis = current_user.wikis
-    @userprivatewikis = @userwikis.where('private == ?', true)
+    @userprivatewikis = @userwikis.where('private = ?', true)
     current_user.downgrade_account
 
     @userprivatewikis.each do |privatewiki|
