@@ -12,21 +12,54 @@ require 'faker'
 end
 
 users = User.all
- 
-# Create Wikis
-50.times do
- Wiki.create!(
-   title:  Faker::Lorem.sentence,
-   body:   Faker::Lorem.paragraph,
-   user: users.sample
- )
+
+users.each do |user|
+  5.times do
+    a = Wiki.create!(
+      title: Faker::Lorem.sentence,
+      body: Faker::Lorem.paragraph,
+    )
+
+    Collaborator.create!(
+      user: user,
+      wiki: a
+    )
+  end
 end
+ 
+# # Create Wikis
+# 50.times do
+#   Wiki.create!(
+#    title:  Faker::Lorem.sentence,
+#    body:   Faker::Lorem.paragraph,
+#   )
+# end
+
+# wikis = Wiki.all
+
+# # Create Collaborations
+# 50.times do
+#   Collaborator.create!(
+#     user: users.sample,
+#     wiki: wikis.sample,
+#   )
+# end
 
 user = User.first
 user.skip_reconfirmation!
 user.update_attributes!(
   name: 'Jonathan',
   email: 'klaha.77@gmail.com',
+  password: 'helloworld',
+  role: 'premium',
+  premium: '2015-04-19'
+)
+
+user = User.second
+user.skip_reconfirmation!
+user.update_attributes!(
+  name: 'Nathan',
+  email: 'member@example.com',
   password: 'helloworld'
 )
 

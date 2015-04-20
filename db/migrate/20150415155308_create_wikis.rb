@@ -4,9 +4,10 @@ class CreateWikis < ActiveRecord::Migration
       t.string :title
       t.text :body
       t.boolean :private
-      t.references :user, index: true
 
       t.timestamps
     end
+
+    add_index :wikis, :id, unique: true
   end
 end

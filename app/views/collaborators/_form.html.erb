@@ -1,0 +1,22 @@
+<div class="row">
+  <%= form_for [@wiki, newcollaborator], :html => {class: 'small-11 small-centered columns'} do |f| %>
+    <h2 class="text-center">Add Collaborator:</h2>
+    <div class="row">
+      <div class="field small-12 columns">
+        <%= f.label :user_id, "User" %>
+        <%= f.collection_select(:user_id, User.all, :id, :name, prompt: "Select Collaborator") %>
+        
+      </div>
+    </div>
+    <div class="row">
+      <div class="field small-12 columns">
+        <%= f.hidden_field :wiki_id, value: @wiki.id %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="actions small-10 small-centered columns text-center">
+          <%= f.submit "Save", class: 'button small' %>
+      </div>
+    </div>
+  <% end %>
+</div>

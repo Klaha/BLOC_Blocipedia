@@ -1,7 +1,13 @@
 class Wiki < ActiveRecord::Base
-  belongs_to :user
+  has_many :collaborators
+  has_many :users, through: :collaborators
 
   validates :title, presence: true
+
+  # default_scope { order('created_at ASC') }
+  # scope :visible_to, -> (user) { 
+  #   user ? all : where(private: false) 
+  # }
 
   def downgrade_wikis
     update_attributes(:private => false)
@@ -9,6 +15,10 @@ class Wiki < ActiveRecord::Base
 
   def markdown_body
     render_as_markdown(self.body)
+  end
+
+  def user_is_collaborator?(user)
+    self.users.where('user_id == ?', user).exists?
   end
 
   private

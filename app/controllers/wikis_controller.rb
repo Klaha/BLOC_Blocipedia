@@ -1,8 +1,18 @@
 class WikisController < ApplicationController
+
   def index
     @wikis = Wiki.all
-    @publicwikis = Wiki.where(:private => [nil, false])
+    # @wikis = policy_scope(Wiki)
+    @publicwikis = Wiki.where(:private => [nil, false])    
     @privatewikis = Wiki.where('private == ?', true)
+    @collabwikis = Array.new
+
+    @privatewikis.each do |privatewiki|
+      if privatewiki.users.where('user_id == ?', current_user).exists?
+        @collabwikis.push(privatewiki)
+      end 
+    end
+
     authorize @wikis
   end
 
@@ -13,7 +23,7 @@ class WikisController < ApplicationController
 
   def create
     @user = current_user
-    @wiki = @user.wikis.build(wiki_params)
+    @wiki = Wiki.new(wiki_params)
     authorize @wiki
 
     if @wiki.save
@@ -23,6 +33,8 @@ class WikisController < ApplicationController
       flash[:error] = "There was a problem creating the Wiki. Try again!"
       render :new
     end
+
+    create_collaboration(@user.id, @wiki.id)
   end
 
   def show
@@ -33,6 +45,9 @@ class WikisController < ApplicationController
   def edit
     @wiki = Wiki.find(params[:id])
     authorize @wiki
+    @collaborators = Collaborator.where('wiki_id == ?', 51)
+    # @collaborators = @wiki.users
+    @newcollaborator = Collaborator.new
   end
 
   def update
@@ -66,6 +81,13 @@ class WikisController < ApplicationController
 
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private)
+  end
+
+  def create_collaboration(user_id, wiki_id)
+    @collab = Collaborator.new
+    @collab.user_id = user_id
+    @collab.wiki_id = wiki_id
+    @collab.save
   end
 
 end
