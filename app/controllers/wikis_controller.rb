@@ -1,19 +1,23 @@
 class WikisController < ApplicationController
 
   def index
-    @wikis = Wiki.all
-    # @wikis = policy_scope(Wiki)
-    @publicwikis = Wiki.where(:private => [nil, false])    
-    @privatewikis = Wiki.where('private == ?', true)
-    @collabwikis = Array.new
 
-    @privatewikis.each do |privatewiki|
-      if privatewiki.users.where('user_id == ?', current_user).exists?
-        @collabwikis.push(privatewiki)
-      end 
-    end
+    @wikis = policy_scope(Wiki.by_title)
 
-    authorize @wikis
+    # @wikis = Wiki.all
+    # @publicwikis = Wiki.where(:private => [nil, false])    
+    # @privatewikis = Wiki.where('private == ?', true)
+    # @collabwikis = Array.new
+
+    # @privatewikis.each do |privatewiki|
+    #   if privatewiki.users.where('user_id == ?', current_user).exists?
+    #     @collabwikis.push(privatewiki)
+    #   end 
+    # end
+
+    # authorize @wikis
+
+
   end
 
   def new

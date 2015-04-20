@@ -1,11 +1,11 @@
 <div class="row">
   <div class="small-12 columns small-centered text-center">
-    <h2>Public Wikis:</h2>
+    <h2>Wikis:</h2>
   </div>
 </div>
 <br>
 <div class="row">
-  <div class="small-8 columns small-centered">
+  <div class="small-8 large-6 medium-6 medium-centered large-centered columns small-centered">
     <table>
       <thead>
         <tr>
@@ -17,12 +17,16 @@
         </tr>
       </thead>
       <tbody>
-        <% @publicwikis.each do |publicwiki| %>
+        <% @wikis.each do |wiki| %>
           <tr>
-            <td><strong><%= link_to publicwiki.title, wiki_path(publicwiki) %></strong></td>
+            <% if wiki.private? %>
+              <td><strong><%= link_to wiki.title, wiki_path(wiki), style: 'color: red' %></strong></td>
+            <% else %>
+              <td><strong><%= link_to wiki.title, wiki_path(wiki) %></strong></td>
+            <% end %>
             <% if current_user %>
-              <td><%= link_to "Edit", edit_wiki_path(publicwiki) %></td>
-              <td><%= link_to "Delete", wiki_path(publicwiki), method: :delete %></td>
+              <td><%= link_to "Edit", edit_wiki_path(wiki) %></td>
+              <td><%= link_to "Delete", wiki_path(wiki), method: :delete %></td>
             <% end %>
           </tr>
         <% end %>
@@ -30,72 +34,3 @@
     </table>
   </div>
 </div>
-<% if policy(@wikis).create? %>
-  <div class="row">
-    <div class="small-12 columns small-centered text-center">
-      <%= link_to "New Wiki", new_wiki_path, class: 'button small info' %>
-    </div>
-  </div>
-<% end %>
-
-<% if current_user && (current_user.role == 'admin' || current_user.premium?)  %>
-  <div class="row">
-    <div class="small-8 columns small-centered text-center">
-      <h2>Private Wikis:</h2>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="small-8 columns small-centered">
-      <table>
-        <thead>
-          <tr>
-            <th class="text-center">Title</th>
-            <th class="text-center">Edit</th>
-            <th class="text-center">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @privatewikis.each do |privatewiki| %>
-          <tr>
-            <td><strong><%= link_to privatewiki.title, wiki_path(privatewiki) %></strong></td>
-            <td><%= link_to "Edit", edit_wiki_path(privatewiki) %></td>
-            <td><%= link_to "Delete", wiki_path(privatewiki), method: :delete %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-<% end %>
-
-<% if current_user && (!current_user.premium? && current_user.wikis.where('private == ?', true).exists?) %>
-  <div class="row">
-        <div class="small-8 columns small-centered text-center">
-          <h2>Private Wikis I'm a collaborator:</h2>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="small-8 columns small-centered">
-          <table>
-            <thead>
-              <tr>
-                <th class="text-center">Title</th>
-                <th class="text-center">Edit</th>
-                <th class="text-center">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @collabwikis.each do |collabwiki| %>
-                  <tr>
-                    <td><strong><%= link_to collabwiki.title, wiki_path(collabwiki) %></strong></td>
-                    <td><%= link_to "Edit", edit_wiki_path(collabwiki) %></td>
-                    <td><%= link_to "Delete", wiki_path(collabwiki), method: :delete %></td>
-                  </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-<% end %>

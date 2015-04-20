@@ -4,10 +4,8 @@ class Wiki < ActiveRecord::Base
 
   validates :title, presence: true
 
-  # default_scope { order('created_at ASC') }
-  # scope :visible_to, -> (user) { 
-  #   user ? all : where(private: false) 
-  # }
+  # default_scope { order('title ASC') }
+  scope :by_title, -> { order('title ASC') }
 
   def downgrade_wikis
     update_attributes(:private => false)
@@ -17,9 +15,9 @@ class Wiki < ActiveRecord::Base
     render_as_markdown(self.body)
   end
 
-  def user_is_collaborator?(user)
-    self.users.where('user_id == ?', user).exists?
-  end
+  # def user_is_collaborator?(user)
+  #   self.users.where('user_id == ?', user).exists?
+  # end
 
   private
 

@@ -4,7 +4,8 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    !record.private? || user.present?
+    # PUBLIC AND (usernotpresent OR userpresent) OR PRIVATE AND (userpresent AND (User is Collaborator OR userAdmin OR userPremium))
+    (!record.private? && (!user.present? || user.present?)) || (record.private? && user.present? && (record.users.include?(user) || user.role == 'admin' || user.role == 'premium'))
   end
 
   class Scope
@@ -17,12 +18,12 @@ class WikiPolicy < ApplicationPolicy
    
        def resolve
          wikis = []
-         if user.role == 'admin'
+         if user.present? && user.role == 'admin'
            wikis = scope.all # if the user is an admin, show them all the wikis
-         elsif user.role == 'premium'
+         elsif user.present? && user.role == 'premium'
            all_wikis = scope.all
            all_wikis.each do |wiki|
-             if !wiki.private? ||  wiki.private? || wiki.users.include?(user)
+             if !wiki.private? ||  wiki.private?
                wikis << wiki # if the user is premium, only show them public wikis, or that private wikis they created, or private wikis they are a collaborator on
              end
            end
