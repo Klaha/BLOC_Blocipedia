@@ -44,3 +44,6 @@ gem 'whenever', :require => false
 
 # MarkDown
 gem 'redcarpet'
+
+# NewRelic
+gem 'newrelic_rpm'
